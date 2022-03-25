@@ -6,8 +6,6 @@ import Button from "../UI/Button";
 import { useHistory } from "react-router-dom";
 import { Visibility, VisibilityOff } from "@material-ui/icons";
 import { useEffect, useState } from "react";
-import { register } from "../../lib/api";
-import useHttp from "../../hooks/use-http";
 import LoadingSpinner from "../UI/LoadingSpinner";
 import { useDispatch, useSelector } from "react-redux";
 import { registerAction } from "../../store/auth-slice";

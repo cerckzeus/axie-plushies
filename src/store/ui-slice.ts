@@ -1,11 +1,13 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface uiSliceState {
-    loadingStatus: string
+    loadingStatus: string,
+    modalIsShown: boolean
 }
 
 const initialState: uiSliceState = {
-    loadingStatus: ""
+    loadingStatus: "",
+    modalIsShown: false
 }
 
 const uiSlice = createSlice({
@@ -14,6 +16,12 @@ const uiSlice = createSlice({
     reducers: {
         setLoadingStatus(state, action: PayloadAction<string>){
             state.loadingStatus = action.payload;
+        },
+        showModal(state){
+            state.modalIsShown = true
+        },
+        closeModal(state){
+            state.modalIsShown = false
         }
     }
 });

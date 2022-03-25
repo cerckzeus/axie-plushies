@@ -5,7 +5,7 @@ import { TextField } from "formik-mui";
 import Button from "../UI/Button";
 import { useHistory } from "react-router-dom";
 import { Visibility, VisibilityOff } from "@material-ui/icons";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import LoadingSpinner from "../UI/LoadingSpinner";
 import { useDispatch, useSelector } from "react-redux";
 import { logInAction } from "../../store/auth-slice";
@@ -21,13 +21,6 @@ const SignIn: React.FC = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   const { loadingStatus } = useSelector(selectUi);
-
-  useEffect(() => {
-    if (loadingStatus === "success" ) {
-      dispatch(uiActions.setLoadingStatus(""));
-      history.replace("/market");
-    }
-  }, [loadingStatus, history]);
 
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const toggleAuthHandler = () => {
@@ -66,24 +59,19 @@ const SignIn: React.FC = () => {
             return errors;
           }}
           onSubmit={(values, { setSubmitting }) => {
-            dispatch(
-              logInAction({ email: values.email, password: values.password })
-            );
-            // signUp(values.email, values.password);
-            // setSubmitting(false);
-            // setTimeout(() => {
-            //   setSubmitting(false);
-            //   alert(JSON.stringify(values, null, 2));
-            // }, 500);
+            const login = async () => {
+              await dispatch(
+                logInAction({ email: values.email, password: values.password })
+              );
+              dispatch(uiActions.setLoadingStatus(""));
+              history.push("/market");
+            };
+            login();
           }}
         >
           {({
-            values,
             submitForm,
-            resetForm,
             isSubmitting,
-            touched,
-            errors,
           }) => (
             <Form>
               <Box margin={1}>
@@ -126,9 +114,6 @@ const SignIn: React.FC = () => {
               )}
               <Box margin={1}>
                 <Button
-                  //   sx={{ margin: 1 }}
-                  //   variant="contained"
-                  //   color="primary"
                   className="action"
                   disabled={isSubmitting}
                   onClick={submitForm}

@@ -1,39 +1,60 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { cartActions, fetchCartAction } from "./cart-slice";
 import { uiActions } from "./ui-slice";
 
 interface actionCreatorProps {
-    email: string,
-    password: string
+  email: string;
+  password: string;
 }
 
 interface authSliceState {
-    token: string | null,
-    isLoggedIn: boolean
+  token: string | null;
+  email: string | null;
+  localId: string | null;
+  isLoggedIn: boolean;
 }
 
 const initialState: authSliceState = {
-    token: localStorage.getItem('token') ,
-    isLoggedIn: !!localStorage.getItem('token'),
-}
+  token: localStorage.getItem("token"),
+  email: localStorage.getItem("email"),
+  localId: localStorage.getItem("localId"),
+  isLoggedIn: !!localStorage.getItem("token"),
+};
 
-const authSlice = createSlice({
+const authSlice = createSlice({ 
   name: "auth",
   initialState,
   reducers: {
     login(state, action) {
-      const token = action.payload;
-      state.token = token;
-      localStorage.setItem("token", token);
-      state.isLoggedIn = !!localStorage.getItem('token');
-      console.log(state.token, state.isLoggedIn);
+      const loginData = action.payload;
+      state.token = loginData.idToken;
+      state.email = loginData.email;
+      state.localId = loginData.localId;
+      localStorage.setItem("token", loginData.idToken);
+      localStorage.setItem("localId", loginData.localId);
+      localStorage.setItem("email", loginData.email);
+      state.isLoggedIn = !!localStorage.getItem("token");
+      console.log(state);
     },
     logout(state) {
       state.token = null;
+      state.localId = null;
+      state.email = null;
       localStorage.removeItem("token");
+      localStorage.removeItem("localId");
+      localStorage.removeItem("email");
       state.isLoggedIn = false;
     },
   },
 });
+
+export const logOutAction = () => {
+  return (dispatch: any) => {
+    dispatch(
+      cartActions.clearCart()
+    );
+  };
+};
 
 export const logInAction = (requestData: actionCreatorProps) => {
   return async (dispatch: any) => {
@@ -62,18 +83,23 @@ export const logInAction = (requestData: actionCreatorProps) => {
     };
     try {
       const loginData = await fetchLoginData();
-      dispatch(authActions.login(loginData.idToken));
+      dispatch(authActions.login(loginData));
       dispatch(uiActions.setLoadingStatus("success"));
+      dispatch(fetchCartAction());
     } catch (error) {}
   };
 };
 
-export const registerAction = (requestData: actionCreatorProps) => {
+interface registerDataType {
+  email: string;
+  localId: string;
+  cartItems: {};
+}
 
+export const registerAction = (requestData: actionCreatorProps) => {
   return async (dispatch: any) => {
-      
     dispatch(uiActions.setLoadingStatus("pending"));
-    const sendRequest = async () => {
+    const sendSignUpRequest = async () => {
       const res = await fetch(
         "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyD26oEXEaOJk3VHW_AYhrPQCl-VzeWQ9gM",
         {
@@ -95,8 +121,31 @@ export const registerAction = (requestData: actionCreatorProps) => {
       }
       return data;
     };
+    const sendPostRequest = async (regData: registerDataType) => {
+      const res = await fetch(
+        "https://axie-plushies-default-rtdb.firebaseio.com/users/" +
+          regData.localId +
+          ".json",
+        {
+          method: "PUT",
+          body: JSON.stringify({
+            email: regData.email,
+            id: regData.localId,
+            cart: { totalPieces: 0, totalAmount: 0 },
+          }),
+          headers: { "Content-type": "application/json" },
+        }
+      );
+      const data = await res.json();
+      console.log(data);
+      if (!res.ok) {
+        //throw error
+      }
+      return data;
+    };
     try {
-      const registerData = await sendRequest();
+      const registerData = await sendSignUpRequest();
+      await sendPostRequest(registerData);
       dispatch(uiActions.setLoadingStatus("success"));
     } catch (error) {}
   };

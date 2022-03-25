@@ -9,7 +9,12 @@ type Props = {
 
 const Button: React.FC<Props> = (props) => {
   return (
-    <StyledButton className={props.className} variant="contained" disabled={props.disabled} onClick={props.onClick}>
+    <StyledButton
+      className={props.className}
+      variant="contained"
+      disabled={props.disabled}
+      onClick={props.onClick}
+    >
       {props.children}
     </StyledButton>
   );

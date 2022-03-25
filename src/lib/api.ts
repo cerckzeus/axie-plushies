@@ -1,48 +1,39 @@
-
-interface Props {
-  email: string;
-  password: string;
+export const GETAXIE_QUERY = `query GetAxieBriefList(
+  $auctionType: AuctionType
+  $criteria: AxieSearchCriteria
+  $from: Int
+  $sort: SortBy
+  $size: Int
+  $owner: String
+) {
+  axies(
+    auctionType: $auctionType
+    criteria: $criteria
+    from: $from
+    sort: $sort
+    size: $size
+    owner: $owner
+  ) {
+    total
+    results {
+      ...AxieBrief
+      __typename
+    }
+    __typename
+  }
 }
 
-export const register = async (requestData: Props) => {
-  const res = await fetch(
-    "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyD26oEXEaOJk3VHW_AYhrPQCl-VzeWQ9gM",
-    {
-      method: "POST",
-      body: JSON.stringify({
-        email: requestData.email,
-        password: requestData.password,
-        returnSecureToken: true,
-      }),
-      headers: { "Content-Type": "application/json" },
-    }
-  );
-  if (!res.ok) {
-    //throw error
+fragment AxieBrief on Axie {
+  id
+  class
+  image
+  parts {
+    id
+    name
+    class
+    type
+    specialGenes
+    __typename
   }
-
-  return null;
-};
-
-// export const logIn = async (requestData: Props) => {
-//   const res = await fetch(
-//     "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyD26oEXEaOJk3VHW_AYhrPQCl-VzeWQ9gM",
-//     {
-//       method: "POST",
-//       body: JSON.stringify({
-//         email: requestData.email,
-//         password: requestData.password,
-//         returnSecureToken: true,
-//       }),
-//       headers: { "Content-Type": "application/json" },
-//     }
-//   );
-
-//   const data = await res.json();
-//   console.log(data);
-
-//   if (!res.ok) {
-//     //throw error
-//   }
-//   return data;
-// };
+  __typename
+}`;

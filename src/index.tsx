@@ -3,9 +3,11 @@ import App from "./App";
 import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 import store from "./store/index";
+import GlobalStyle from "./components/styles/GlobalStyle";
 
 ReactDOM.render(
-  <Provider store = {store} >
+  <Provider store={store}>
+    <GlobalStyle />
     <BrowserRouter>
       <App />
     </BrowserRouter>

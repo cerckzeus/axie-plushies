@@ -3,12 +3,19 @@ import { NavLink as Link } from "react-router-dom";
 import { FaBars } from "react-icons/fa";
 
 export const Nav = styled.nav`
+  position: fixed;
+  top: 0;
+  z-index: 10 !important;
   background: #000;
-  height: 80px;
+  height: 85px;
+  top: 0;
+  width: 100%;
   display: flex;
   justify-content: space-between;
   padding: 0.5rem calc((100vw-1000px) / 2);
-  z-index: 10;
+  & img{
+    width: 100px;
+  }
 `;
 
 export const NavLink = styled(Link)`
@@ -88,20 +95,40 @@ export const NavBtnLink = styled(Link)`
 `;
 
 export const NavBtnCart = styled.button`
-  border-radius: 4px;
-  background: #256ce1;
-  padding: 10px 22px;
+  background: transparent;
   color: #fff;
   border: none;
   outline: none;
   cursor: pointer;
   transition: all 0.2s ease-in-out;
-  text-decoration: none;
+  display: flex;
+  align-items: center;
+
+  & svg {
+    position: relative;
+    top: 0.1rem;
+    left: 0.5rem;
+  }
+  & div {
+    position: relative;
+    top: -0.8rem;
+    left: -0.1rem;
+    transition: all 0.2s ease-in-out;
+    font-weight: bold;
+    color: #010606;
+    background-color: #fff;
+    border-radius: 30px;
+    border: 2px solid #010606;
+    padding: 0.15rem 0.6rem;
+    border-radius: 30px;
+  }
 
   &:hover {
+    & div {
+      background-color: #256ce1;
+    }
     transition: all 0.2s ease-in-out;
-    background: #fff;
-    color: #010606;
+    color: #256ce1;
   }
 `;
 

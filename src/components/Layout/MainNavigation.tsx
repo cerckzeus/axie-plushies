@@ -9,48 +9,61 @@ import {
   NavBtnCart,
   NavLogoutLink,
 } from "../styles/NavbarElements.styled";
+import logo_min from '../../images/logo_min.png';
 import { FaShoppingCart } from "react-icons/fa";
-import { selectAuth } from "../../store";
+import { selectAuth, selectCart } from "../../store";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { authActions } from "../../store/auth-slice";
+import { authActions, logOutAction } from "../../store/auth-slice";
+import { uiActions } from "../../store/ui-slice";
 
 const MainNavigation: React.FC = () => {
-  const { isLoggedIn, token } = useSelector(selectAuth);
+  const { isLoggedIn } = useSelector(selectAuth);
+  const { totalPieces } = useSelector(selectCart);
   const history = useHistory();
   const dispatch = useDispatch();
 
   const logoutHandler = () => {
+    dispatch(logOutAction());
     dispatch(authActions.logout());
     history.push("/");
+  };
+
+  const showCartModal = () => {
+    dispatch(uiActions.showModal());
   };
 
   return (
     <>
       <Nav>
         <NavLink to="/">
-          <h1>LOGO</h1>
+          <img src={logo_min} alt="logo"/>
         </NavLink>
         <Bars />
         <NavMenu>
           <NavLink to="/" exact>
             Home
           </NavLink>
-          <NavLink to="/market">Market</NavLink>
+          {isLoggedIn && (
+            <NavLink to="/market">Market</NavLink>
+          )}
           <NavLink to="/about">About</NavLink>
           <NavLink to="/contact-us">Contact Us</NavLink>
         </NavMenu>
         <NavBtn>
-          {!isLoggedIn && !token && <NavBtnLink to="/sign-in">Sign In</NavBtnLink>}
-          {isLoggedIn && !!token && (
+          {!isLoggedIn && (
+            <NavBtnLink to="/sign-in">Sign In</NavBtnLink>
+          )}
+          {isLoggedIn && (
             <div>
-              <NavBtnCart>
-                <FaShoppingCart />
+              <NavBtnCart onClick={showCartModal}>
+                <FaShoppingCart size="33" />
+                <div>{totalPieces}</div>
               </NavBtnCart>
               <NavLogoutLink onClick={logoutHandler}>Log out</NavLogoutLink>
             </div>
           )}
-          </NavBtn>
+        </NavBtn>
       </Nav>
     </>
   );
