@@ -1,23 +1,27 @@
-import logo_min from '../../images/logo_min.png';
 import styled from "styled-components";
 import { FaFacebook, FaGithub } from "react-icons/fa";
+import { NavLink } from "react-router-dom";
 
 const Footer = () => {
   return (
     <StyledFooter>
       <div className="footer-content">
-        <div><img src={logo_min}/></div>
+        <div>
+          <img src="/images/logo_min.png" alt=""/>
+        </div>
         <div>
           <small>© 2022 AxiePlushies. All rights reserved.</small>
         </div>
         <div className="links">
-          <a>Home</a>
-          <a>About</a>
-          <a>Contact Us</a>
-          <a>
+          <NavLink to="/" exact>
+            Home
+          </NavLink>
+          <NavLink to="/about">About</NavLink>
+          <NavLink to="/contact-us">Contact Us</NavLink>
+          <a href="https://fb.com/Cerckyy/">
             <FaFacebook />
           </a>
-          <a>
+          <a href="https://github.com/cerckzeus">
             <FaGithub />
           </a>
         </div>
@@ -34,8 +38,8 @@ const StyledFooter = styled.footer`
   justify-content: center;
   align-items: center;
   text-align: center;
-  & img{
-      width: 100px;
+  & img {
+    width: 100px;
   }
   & div {
     margin-bottom: 0.5rem;
@@ -45,6 +49,8 @@ const StyledFooter = styled.footer`
     align-items: center;
   }
   & .links a {
+    text-decoration: none;
+    color: #fff;
     display: flex;
     flex-direction: row;
     align-items: center;

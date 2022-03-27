@@ -2,12 +2,14 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface uiSliceState {
     loadingStatus: string,
-    modalIsShown: boolean
+    modalIsShown: boolean,
+    sidebarIsShown: boolean
 }
 
 const initialState: uiSliceState = {
     loadingStatus: "",
-    modalIsShown: false
+    modalIsShown: false,
+    sidebarIsShown: false
 }
 
 const uiSlice = createSlice({
@@ -22,6 +24,12 @@ const uiSlice = createSlice({
         },
         closeModal(state){
             state.modalIsShown = false
+        },
+        showSidebar(state){
+            state.sidebarIsShown = true
+        },
+        closeSidebar(state){
+            state.sidebarIsShown = false
         }
     }
 });

@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import { selectUi } from "../../store";
 import Header from "./Header";
 import Footer from "./Footer";
+import Sidebar from "./Sidebar";
 
 const Layout: React.FC = (props) => {
   const { modalIsShown } = useSelector(selectUi);
@@ -12,6 +13,7 @@ const Layout: React.FC = (props) => {
   return (
     <Fragment>
       {modalIsShown && <Cart />}
+      <Sidebar />
       <Header />
       <Page>
         <StyledMain>{props.children}</StyledMain>
@@ -30,6 +32,8 @@ const Page = styled.div`
 `;
 
 const StyledMain = styled.main`
+display: flex;
+flex: 1;
 `;
 
 export default Layout;

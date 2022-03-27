@@ -9,7 +9,6 @@ import {
   NavBtnCart,
   NavLogoutLink,
 } from "../styles/NavbarElements.styled";
-import logo_min from '../../images/logo_min.png';
 import { FaShoppingCart } from "react-icons/fa";
 import { selectAuth, selectCart } from "../../store";
 import { useDispatch, useSelector } from "react-redux";
@@ -33,27 +32,27 @@ const MainNavigation: React.FC = () => {
     dispatch(uiActions.showModal());
   };
 
+  const showSidebar = () => {
+    dispatch(uiActions.showSidebar());
+  };
+
   return (
     <>
       <Nav>
         <NavLink to="/">
-          <img src={logo_min} alt="logo"/>
+          <img src="/images/logo_min.png" alt="logo" />
         </NavLink>
-        <Bars />
+        <Bars onClick={showSidebar}/>
         <NavMenu>
           <NavLink to="/" exact>
             Home
           </NavLink>
-          {isLoggedIn && (
-            <NavLink to="/market">Market</NavLink>
-          )}
+          {isLoggedIn && <NavLink to="/market">Market</NavLink>}
           <NavLink to="/about">About</NavLink>
           <NavLink to="/contact-us">Contact Us</NavLink>
         </NavMenu>
         <NavBtn>
-          {!isLoggedIn && (
-            <NavBtnLink to="/sign-in">Sign In</NavBtnLink>
-          )}
+          {!isLoggedIn && <NavBtnLink to="/sign-in">Sign In</NavBtnLink>}
           {isLoggedIn && (
             <div>
               <NavBtnCart onClick={showCartModal}>

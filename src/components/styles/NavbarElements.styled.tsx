@@ -9,11 +9,13 @@ export const Nav = styled.nav`
   background: #000;
   height: 85px;
   top: 0;
-  width: 100%;
+  width: 100vw;
   display: flex;
   justify-content: space-between;
+  
+  overflow-x: hidden;
   padding: 0.5rem calc((100vw-1000px) / 2);
-  & img{
+  & img {
     width: 100px;
   }
 `;
