@@ -21,7 +21,7 @@ const initialState: authSliceState = {
   isLoggedIn: !!localStorage.getItem("token"),
 };
 
-const authSlice = createSlice({ 
+const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
@@ -50,9 +50,7 @@ const authSlice = createSlice({
 
 export const logOutAction = () => {
   return (dispatch: any) => {
-    dispatch(
-      cartActions.clearCart()
-    );
+    dispatch(cartActions.clearCart());
   };
 };
 
@@ -77,7 +75,8 @@ export const logInAction = (requestData: actionCreatorProps) => {
       console.log(data);
 
       if (!res.ok) {
-        //throw error
+        let errorMessage = "Authentication failed!";
+        throw new Error(errorMessage);
       }
       return data;
     };
@@ -86,7 +85,11 @@ export const logInAction = (requestData: actionCreatorProps) => {
       dispatch(authActions.login(loginData));
       dispatch(uiActions.setLoadingStatus("success"));
       dispatch(fetchCartAction());
-    } catch (error) {}
+    } catch (error) {
+      console.log("At catch part:")
+      console.log(error)
+      alert(error);
+    }
   };
 };
 

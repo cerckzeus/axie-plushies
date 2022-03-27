@@ -34,6 +34,7 @@ const Page = styled.div`
 const StyledMain = styled.main`
 display: flex;
 flex: 1;
+height: 100vh;
 `;
 
 export default Layout;

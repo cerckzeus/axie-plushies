@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 export const MarketWrapper = styled.div`
   min-height: 100vh;
+  width: 100vw;
   display: flex;
   background-image: url("https://cdn.axieinfinity.com/landing-page/_next/static/images/arena-e2c796e23cdd8c171dd56950e96b4f40.jpg");
   background-size: cover;

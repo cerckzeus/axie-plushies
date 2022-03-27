@@ -56,7 +56,7 @@ const Sidebar = () => {
         </SidebarMenu>
         <SidebarBtn>
           {!isLoggedIn && (
-            <SidebarBtnLink to="/sign-in">Sign In</SidebarBtnLink>
+            <SidebarBtnLink to="/sign-in" onClick={closeSidebar}>Sign In</SidebarBtnLink>
           )}
           {isLoggedIn && (
             <div className="actions">
@@ -124,7 +124,6 @@ export const SidebarBtn = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-right: 24px;
 
   & .actions {
     margin-top: 100px;

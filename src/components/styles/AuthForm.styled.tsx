@@ -2,16 +2,25 @@ import { styled } from "@mui/material/styles";
 import { Box, BoxProps } from "@mui/system";
 
 const StyledAuthForm = styled(Box)<BoxProps>(() => ({
+  width: "100vw",
+  height: "100vh",
+  backgroundSize: "cover",
+  backgroundRepeat: "no-repeat",
+  backgroundPosition: "center center",
+  backgroundImage: "url('/images/hero_bg.jpg')",
+  flex: "1",
+  display: "flex",
+  alignItems: "center",
   fontFamily: "Sora",
-  maxWidth: "25rem",
-  margin: "3rem auto",
   padding: "1rem",
   ".MuiPaper-root": {
+    maxWidth: "25rem",
     minHeight: "58vh",
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "flex-start",
+    margin: "0 auto",
     padding: "2rem",
   },
   "& form": {
@@ -23,6 +32,7 @@ const StyledAuthForm = styled(Box)<BoxProps>(() => ({
     }
   },
   "& h1": {
+    textAlign: "center",
     marginBottom:"30px",
     fontSize: "3rem",
     color: "#15cdfc"

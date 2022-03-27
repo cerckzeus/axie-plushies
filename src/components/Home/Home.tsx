@@ -19,7 +19,9 @@ const Home: React.FC = () => {
         </div>
       </HeroSection>
       <CardSection>
-        <div className="card-bg"></div>
+        <div className="card-bg">
+          <div></div>
+        </div>
       </CardSection>
     </HomeWrapper>
   );
@@ -29,10 +31,14 @@ const HomeWrapper = styled.div`
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap !important;
+  flex:1;
+  align-items: stretch;
   overflow-x: hidden;
 `;
 const HeroSection = styled.section`
   flex: 1;
+
+justify-content: stretch;
   & .hero-bg {
     height: 100%;
     padding: 2rem 4rem;
@@ -89,15 +95,15 @@ const HeroSection = styled.section`
 
 const CardSection = styled.section`
   flex: 1;
-  
-  justify-content: stretch;
+
   & .card-bg {
-    height: 100%;
+    height: 100vh;
     width: 100vw;
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center center;
     background-image: url("https://cdn.axieinfinity.com/landing-page/_next/static/images/drawer-eb7c690a3e719c4e1fa89440f5504981.jpg");
+    
   }
 `;
 
