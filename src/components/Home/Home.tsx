@@ -1,6 +1,13 @@
+import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 
 const Home: React.FC = () => {
+
+  const history = useHistory();
+
+  const signUp = () => {
+    history.push("/sign-up");
+  }
   return (
     <HomeWrapper>
       <HeroSection>
@@ -14,7 +21,7 @@ const Home: React.FC = () => {
               <strong>Axie Plushies</strong> will let your dream come true by
               making your favorite axie into a real life cute plushie.
             </p>
-            <button>SIGN UP NOW</button>
+            <button onClick={signUp}>SIGN UP NOW</button>
           </div>
         </div>
       </HeroSection>
